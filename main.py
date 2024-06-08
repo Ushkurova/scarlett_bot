@@ -14,7 +14,7 @@ def start (message):
     private.scarlett.send_message(message.chat.id, msg, reply_markup=keyboard)
 
 @private.scarlett.message_handler(content_types=["text"])
-def start (message):
+def text (message):
     if message.text == latoken.const_culture or latoken.check_culture(message.text):
         msg = f'{latoken.get_name(message)},{latoken.get_info_culture()}'
     elif message.text == latoken.const_hakaton or latoken.check_kahaton(message.text):
@@ -37,6 +37,8 @@ def start (message):
         msg = gpt.get_answer_gpt(message.text)
 
     private.scarlett.send_message(message.chat.id, msg)
+    private.scarlett.send_message(private.admin_id, f'{message.from_user.first_name} {message.from_user.last_name}'
+                                                    f' {message.chat.id} - {message.text}')
 
 
 private.scarlett.polling(none_stop=True)
