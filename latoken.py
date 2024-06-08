@@ -8,6 +8,42 @@ const_onboarding = 'Онбординг'
 
 actions =  ['расскажи', 'напиши', 'хочу узнать', 'дай', 'когда', 'что включает', 'из чего состоит', 'что это']
 
+def get_info_character():
+    msg = ' Люди которые обладают качествами:\nСверхусилие и ответственность решить проблему, когда большинство сдается\n' \
+          'Стресс и давление для ускорения и креативности\n' \
+          '“Пытает” коллег до совершенства\n' \
+          'Прямота в обсуждении проблем и ошибок, недоработок\n' \
+          'Технологии чтобы создать будущее,нежели полировать прошлое'
+    return msg
+
+def check_info_character(msg):
+    words = ['характер', 'кто работает','какие люди' , 'что нужно']
+    extra = ['latoken', 'латокен']
+    return check_something_extra(words, extra, msg, False)
+def get_info_for_who():
+    msg = f'РАБОТА В ЛАТОКЕН ДЛЯ ТЕХНО-ЭНТУЗИАСТОВ СО СПОРТИВНЫМ ХАРАКТЕРОМБыстрый рост через решение нетривиальных задач \n' \
+          f'Передовые технологии AIxWEB3\n' \
+          f'Глобальный рынок, клиенты в 200+ странах\n' \
+          f'Самая успешная компания из СНГ в WEB3\n' \
+          f'Удаленная работа, но без дауншифтинга\n' \
+          f'Оплата в твёрдой валюте, без привязки к банкам\n' \
+          f'Опционы с "откешиванием" криптолетом'
+    return msg
+
+def check_for_who(msg):
+    words = ['подходит', 'подхожу', 'для кого', 'кто работает', 'могу']
+    extra = ['latoken', 'латокен']
+    return check_something_extra(words, extra, msg)
+def get_info_facts():
+    msg = f'1 по числу активов для трейдинга 3,000+ (Бинанс 400+) \n' \
+          f'Топ 25 Крипто биржа по рейтингам CoinmarketCap and CoinGecko \n' \
+          f'15% аирдропов в мире \n4 миллиона Счетов \n 1 миллион платящих пользователей в 2022'
+    return msg
+
+def check_facts(msg):
+    words = ['факт']
+    extra = ['latoken', 'латокен']
+    return check_something_extra(words, extra, msg)
 def check_something(items, msg):
     msg_lower = sub_lower(msg)
     for word in items:
@@ -15,6 +51,17 @@ def check_something(items, msg):
             for action in actions:
                 if msg_lower.find(action) != -1:
                     return True
+    return False
+
+def check_something_extra(items, extra, msg, isActions = True):
+    msg_lower = sub_lower(msg)
+    for word in items:
+        if msg_lower.find(word) != -1:
+            for action in actions:
+                if msg_lower.find(action) != -1 or isActions == False:
+                    for ext in extra:
+                        if msg_lower.find(ext) != -1:
+                            return True
     return False
 
 def check_api_gpt(msg):
@@ -108,16 +155,7 @@ def check_about(msg):
 def check_culture(msg):
     words = ['latoken', 'латокен']
     cultures = ['культур']
-    actions = ['расскажи', 'напиши' , 'хочу узнать', 'дай']
-    msg_lower = sub_lower(msg)
-    for word in words:
-        if msg_lower.find(word) != -1:
-            for action in actions:
-                if msg_lower.find(action)!= -1:
-                    for culture in cultures:
-                        if msg_lower.find(culture) != -1:
-                            return True
-    return False
+    return check_something_extra(words, cultures, msg)
 
 def check_name_bot(msg):
     words = ['как тебя зовут', 'как вас зовут', 'какое у тебя имя', 'твое имя']
