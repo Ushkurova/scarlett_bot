@@ -158,7 +158,7 @@ def check_culture(msg):
     return check_something_extra(words, cultures, msg)
 
 def check_name_bot(msg):
-    words = ['как тебя зовут', 'как вас зовут', 'какое у тебя имя', 'твое имя']
+    words = ['как тебя зовут', 'как вас зовут', 'какое у тебя имя', 'твое имя', 'твоё имя']
     msg_lower = sub_lower(msg)
     for text in words:
         if msg_lower.find(text) != -1:

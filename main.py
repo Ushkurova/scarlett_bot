@@ -1,4 +1,4 @@
-import private, gpt, latoken
+import private, latoken, owner_woman, gpt
 from telebot import types
 
 
@@ -33,12 +33,19 @@ def text (message):
         msg = f'{latoken.get_name(message)},{latoken.get_info_for_who()}'
     elif latoken.check_info_character(message.text):
         msg = f'{latoken.get_name(message)},{latoken.get_info_character()}'
+    elif owner_woman.check_salary(message.text):
+        msg = f'{latoken.get_name(message)},{owner_woman.get_salary()}'
+    elif owner_woman.check_owner(message.text):
+        msg = f'{latoken.get_name(message)}, Nadya'
     else:
         msg = gpt.get_answer_gpt(message.text)
 
+    if msg is None:
+        msg = 'error'
     private.scarlett.send_message(message.chat.id, msg)
-    private.scarlett.send_message(private.admin_id, f'{message.from_user.first_name} {message.from_user.last_name}'
-                                                    f' {message.chat.id} - {message.text}')
+    if private.admin_id != str(message.chat.id):
+        private.scarlett.send_message(private.admin_id, f'{message.from_user.first_name} {message.from_user.last_name}'
+                                                        f' {message.chat.id} - {message.text}')
 
 
 private.scarlett.polling(none_stop=True)
